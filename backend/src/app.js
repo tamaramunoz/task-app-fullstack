@@ -10,24 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.get('/api/users', (req, res) => {
-    res.send('User routes')
-});
-
-app.get('/api/notes', (req, res) => {
-    res.send('Notes routes')
-});
-
-app.post('/', (req, res) => {
-    res.send('saved')
-});
-
-app.put('/', (req, res) => {
-    res.send('updated')
-});
-
-app.delete('/', (req, res) => {
-    res.send('deleted')
-});
+app.use('/api/users', require('./routes/users'));
+app.use('/api/notes', require('./routes/notes'));
 
 module.exports = app;
