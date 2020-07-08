@@ -1,4 +1,5 @@
 const usersCtrl = {};
+const User = require('../models/User');
 
 usersCtrl.getUsers = (req, res) => res.send('Users Routes');
 

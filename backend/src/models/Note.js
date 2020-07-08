@@ -7,6 +7,10 @@ const noteSchema = new Schema({
         required: true
     },
     author: String,
+    date: {
+        type: Date,
+        default: Date.now
+    }
 },{
     timestamps: true
 });
