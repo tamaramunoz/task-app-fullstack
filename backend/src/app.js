@@ -10,8 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.get('/', (req, res) => {
-    res.send('received')
+app.get('/api/users', (req, res) => {
+    res.send('User routes')
+});
+
+app.get('/api/notes', (req, res) => {
+    res.send('Notes routes')
 });
 
 app.post('/', (req, res) => {
