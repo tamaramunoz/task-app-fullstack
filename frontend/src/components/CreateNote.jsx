@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
 
 class CreateNote extends Component {
 
     state = {
-        users: []
+        users: [],
+        userSelected: '',
+        date: new Date()
     }
 
     async componentDidMount () {
@@ -17,7 +21,15 @@ class CreateNote extends Component {
         e.preventDefault();
     }
 
-    
+    onInputChange = (e) => {
+        this.setState({
+            userSelected: e.target.value
+        })
+    }
+
+    onChangeDate = (date) => {
+        this.setState({date})
+    }
 
 
     render() {
@@ -30,7 +42,7 @@ class CreateNote extends Component {
                         <select 
                             className="form-control"
                             name="userSelected"
-                            
+                            onChange={this.onInputChange}
                         >
                             {
                                 this.state.users.map(user => 
@@ -39,6 +51,34 @@ class CreateNote extends Component {
                                 </option>)
                             }
                         </select>
+                    </div>
+
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            className="form-control"
+                            placeholder="Title"
+                            name="title"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <textarea 
+                            name="content"
+                            className="form-control"
+                            placeholder="Content"
+                            required
+                        >
+                        </textarea>
+                    </div>
+
+                    <div className="form-group">
+                        <DatePicker 
+                            className="form-control"
+                            selected={this.state.date}
+                            onChange={this.onChangeDate}
+                        />
                     </div>
 
                     <form onSubmit={this.onSubmit}>
