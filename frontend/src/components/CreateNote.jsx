@@ -9,12 +9,15 @@ class CreateNote extends Component {
 
     async componentDidMount () {
         const res = await axios.get('http://localhost:4000/api/users');
-        this.setState({users: res.data})
+        this.setState({users: res.data.map(user => user.username)})
+        console.log(this.state.users)
     }
 
     onSubmit = (e) => {
         e.preventDefault();
     }
+
+    
 
 
     render() {
@@ -31,8 +34,8 @@ class CreateNote extends Component {
                         >
                             {
                                 this.state.users.map(user => 
-                                <option key={user._id}>
-                                    {user.username}
+                                <option key={user} value={user}>
+                                    {user}
                                 </option>)
                             }
                         </select>

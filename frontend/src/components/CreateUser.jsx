@@ -15,7 +15,7 @@ class CreateUser extends Component {
 
     async componentDidMount() {
         await this.getUsers();
-        console.log(this.state.users);
+        // console.log(this.state.users);
     }
 
     onChangeUsername = (e) => {
