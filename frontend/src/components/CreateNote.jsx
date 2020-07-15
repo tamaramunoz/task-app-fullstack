@@ -8,22 +8,36 @@ class CreateNote extends Component {
     state = {
         users: [],
         userSelected: '',
+        title: '',
+        content: '',
         date: new Date()
     }
 
     async componentDidMount () {
         const res = await axios.get('http://localhost:4000/api/users');
-        this.setState({users: res.data.map(user => user.username)})
+        this.setState({
+            users: res.data.map(user => user.username),
+            userSelected: res.data[0].username
+        })
         console.log(this.state.users)
     }
 
-    onSubmit = (e) => {
+    onSubmit = async(e) => {
         e.preventDefault();
+        const newNote = {
+            title: this.state.title,
+            content: this.state.content,
+            date: this.state.date,
+            author: this.state.userSelected
+        }
+        await axios.post('http://localhost:4000/api/notes', newNote);
+        window.location.href = '/';
+        
     }
 
     onInputChange = (e) => {
         this.setState({
-            userSelected: e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -59,6 +73,7 @@ class CreateNote extends Component {
                             className="form-control"
                             placeholder="Title"
                             name="title"
+                            onChange={this.onInputChange}
                             required
                         />
                     </div>
@@ -68,6 +83,7 @@ class CreateNote extends Component {
                             name="content"
                             className="form-control"
                             placeholder="Content"
+                            onChange={this.onInputChange}
                             required
                         >
                         </textarea>
