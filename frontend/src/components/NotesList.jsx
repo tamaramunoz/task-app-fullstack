@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { format } from 'timeago.js'
 
 class NotesList extends Component {
 
@@ -7,11 +8,20 @@ class NotesList extends Component {
         notes: []
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.getNotes();
+    }
+
+    getNotes = async() => {
         const res = await axios.get('http://localhost:4000/api/notes');
         this.setState({
             notes: res.data
         })
+    }
+
+    deleteNote = async(id) => {
+        await axios.delete(`http://localhost:4000/api/notes/${id}`);
+        this.getNotes();
     }
 
     render() {
@@ -27,6 +37,12 @@ class NotesList extends Component {
                                 <div className="card-body">
                                     <p> {note.content} </p>
                                     <p> {note.author} </p>
+                                    <p> {format(note.date)} </p>
+                                </div>
+                                <div className="card-footer">
+                                    <button className="btn btn-danger" onClick={() => this.deleteNote(note._id)} >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         </div>
