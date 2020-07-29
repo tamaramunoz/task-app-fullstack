@@ -2,7 +2,7 @@
 
 ## Description
 This project is for understand better use Backend using NodeJS and MongoDB integrating Docker and Kubernetes.
-Fronend using ReactJS.
+Frontend using ReactJS.
 
 ## Stack:
 ### Backend
