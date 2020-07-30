@@ -10,16 +10,24 @@ class CreateNote extends Component {
         userSelected: '',
         title: '',
         content: '',
-        date: new Date()
+        date: new Date(),
+        editing: false,
+        _id: ''
     }
 
     async componentDidMount () {
+        console.log(this.props.match.params)
         const res = await axios.get('http://localhost:4000/api/users');
         this.setState({
             users: res.data.map(user => user.username),
             userSelected: res.data[0].username
         })
-        console.log(this.state.users)
+        if (this.props.match.params.id) {
+            this.setState({
+                editing: true,
+                _id: this.props.match.params.id
+            })
+        }
     }
 
     onSubmit = async(e) => {
@@ -29,8 +37,15 @@ class CreateNote extends Component {
             content: this.state.content,
             date: this.state.date,
             author: this.state.userSelected
+        };
+
+        if(this.state.editing){
+            await axios.put('http://localhost:4000/api/notes' + this.state._id, newNote)
+        } else {
+            await axios.post('http://localhost:4000/api/notes', newNote);
         }
-        await axios.post('http://localhost:4000/api/notes', newNote);
+
+        
         window.location.href = '/';
         
     }
