@@ -1,10 +1,10 @@
 FROM node:alpine3.12
 
-ADD ./backend /app
+ADD . /app
 
 RUN ls /app
 
-RUN cd/app/backend
+RUN cd /app
 
 RUN npm install
 
